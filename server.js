@@ -1,8 +1,10 @@
 const express = require('express')
 const bcrypt = require('bcrypt-nodejs')
+const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 const database = {
   users: [
@@ -22,13 +24,6 @@ const database = {
       entries: 0,
       joined: new Date()
     }
-  ],
-  login: [
-    {
-      id: '123',
-      hash: '$2a$10$TxPLr7q31d9O3TVd0oVPsO5X9FiNBYFKSEDxqBcWmQX9hSBr/XM3S',
-      email: 'john@gmail.com'
-    }
   ]
 }
 
@@ -39,15 +34,15 @@ app.get('/', (req, res) => {
 
 // /signin --> POST = success/fail
 app.post('/signin', (req, res) => {
-  // Load hash from your password DB.
-  bcrypt.compare("apples", database.login[0].hash, function (err, res) {
-    // res == true
-    console.log('first guess: ', res);
-  });
-  bcrypt.compare("veggies", database.login[0].hash, function (err, res) {
-    // res = false
-    console.log('second guess: ', res);
-  });
+  // // Load hash from your password DB.
+  // bcrypt.compare("apples", database.login[0].hash, function (err, res) {
+  //   // res == true
+  //   console.log('first guess: ', res);
+  // });
+  // bcrypt.compare("veggies", database.login[0].hash, function (err, res) {
+  //   // res = false
+  //   console.log('second guess: ', res);
+  // });
   if (req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
     res.json('success')
@@ -60,10 +55,10 @@ app.post('/signin', (req, res) => {
 app.post('/register', (req, res) => {
   const { email, name, password } = req.body
 
-  bcrypt.hash(password, null, null, function (err, hash) {
-    // Store hash in your password DB.
-    console.log(hash);
-  });
+  // bcrypt.hash(password, null, null, function (err, hash) {
+  //   // Store hash in your password DB.
+  //   console.log(hash);
+  // });
 
   database.users.push(
     {
@@ -112,6 +107,6 @@ app.post('/image', (req, res) => {
   }
 })
 
-app.listen(3000, () => {
-  console.log('App is running on port: 3000');
+app.listen(3001, () => {
+  console.log('App is running on port: 3001');
 })
