@@ -19,8 +19,8 @@ const db = knex({
     password: process.env.PASSWORD,
     database: process.env.DATABASE_NAME
   } || {
-    user: 'smart_brain_7btj_user',
-    database: 'smart_brain_7btj'
+    user: 'smartbrain_mgni_user',
+    database: 'smartbrain_mgni'
   }
 })
 
