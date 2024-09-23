@@ -9,13 +9,15 @@ const register = require('./controllers/register')
 const signin = require('./controllers/signin')
 const profile = require('./controllers/profile')
 const image = require('./controllers/image')
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 const db = knex({
   client: 'pg',
   connection: {
-    user: 'smart_brain_6cxo_user',
-    database: 'smart_brain_6cxo'
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DATABASE_NAME,
+    password: process.env.PASSWORD
   }
 })
 
@@ -31,6 +33,6 @@ app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, db) })
 app.put('/image', (req, res) => { image.handleImage(req, res, db) })
 app.post('/imageurl', (req, res) => { image.handleAPICall(req, res) })
 
-app.listen(PORT || 3001, () => {
+app.listen(PORT, () => {
   console.log(`App is running on port: ${PORT}`);
 })
